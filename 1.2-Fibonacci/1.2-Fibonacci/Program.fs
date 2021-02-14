@@ -9,4 +9,4 @@
 
   fibonacciLoop (0I, 1I) 0I
 
-printf "15th fibonacci number: %A, 0th fibonacci number: %A" (fibonacci 15I) (fibonacci 0I)
+printfn "15th fibonacci number: %A, 0th fibonacci number: %A" (fibonacci 15I) (fibonacci 0I)
