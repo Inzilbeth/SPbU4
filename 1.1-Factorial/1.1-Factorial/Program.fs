@@ -10,4 +10,4 @@
 
     contTailRecursiveFactorial x (fun () -> 1I)
 
-printf "Factorial of 20: %A, factorial of 0: %A." (contFactorial 20I) (contFactorial 0I)
+printfn "Factorial of 20: %A, factorial of 0: %A." (contFactorial 20I) (contFactorial 0I)
