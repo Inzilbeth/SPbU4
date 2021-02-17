@@ -1,13 +1,13 @@
-﻿let contFactorial x =
-    if x < 0I then
-        failwith $"Invalid input: {x}. Input value must be nonnegative."
+﻿let factorial x =
+    if x < 0I
+    then invalidArg "x" $"Invalid input: {x}. Input value must be nonnegative."
 
-    let rec contTailRecursiveFactorial x f =
+    let rec factorialRec x acc =
         if x <= 1I then
-            f()
+            acc
         else
-            contTailRecursiveFactorial (x - 1I) (fun () -> x * f())
+            factorialRec (x - 1I) x * acc
 
-    contTailRecursiveFactorial x (fun () -> 1I)
+    factorialRec x 1I
 
-printfn "Factorial of 20: %A, factorial of 0: %A." (contFactorial 20I) (contFactorial 0I)
+printfn "Factorial of 20: %A, factorial of 0: %A." (factorial 20I) (factorial 0I)
