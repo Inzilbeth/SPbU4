@@ -6,8 +6,8 @@
         if x <= 1I then
             acc
         else
-            factorialRec (x - 1I) x * acc
+            factorialRec (x - 1I) (x * acc)
 
     factorialRec x 1I
 
-printfn "Factorial of 20: %A, factorial of 0: %A." (factorial 20I) (factorial 0I)
+printfn "Factorial of 20000: %A, factorial of 0: %A." (factorial 20000I) (factorial 0I)
