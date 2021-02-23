@@ -1,11 +1,11 @@
-﻿namespace MapFilterFold.OddCounters
+﻿namespace MapFilterFold.EvenCounters
 
-module OddCounters =
-    let mapOddCounter list =
+module EvenCounters =
+    let mapEvenCounter list =
         List.map (fun x -> (((abs (x)) + 1) % 2)) list |> List.sum
 
-    let filterOddCounter list =
+    let filterEvenCounter list =
         (List.filter (fun x -> (x % 2 = 0)) list).Length
 
-    let foldOddCounter list =
+    let foldEvenCounter list =
         List.fold (fun acc x -> acc + (((abs (x)) + 1) % 2)) 0 list
