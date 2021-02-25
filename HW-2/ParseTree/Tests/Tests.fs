@@ -18,12 +18,12 @@ module Tests =
 
     [<Test>]
     let ``Should return a number`` () =
-        let isNumberReturned expression =
+        let checkNumberReturned expression =
             try
                 Parser.parse expression |> should be ofExactType<int>
             with
                 | :? System.DivideByZeroException -> ()
                 | :? System.InvalidOperationException -> ()
-        Check.QuickThrowOnFailure isNumberReturned
+        Check.QuickThrowOnFailure checkNumberReturned
 
 
