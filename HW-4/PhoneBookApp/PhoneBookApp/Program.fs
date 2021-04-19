@@ -2,41 +2,46 @@
 
 open System
 open System.IO
-open System.Collections.Generic
 open System.Runtime.Serialization.Formatters.Binary
 
+/// Class that allows to store contacts and manipulate them.
 type PhoneBook () =
 
+    /// Adds a number, name pair to the contacts list.
     member _.Add book number name =
         let check = System.Text.RegularExpressions.Regex("^[0-9-+ ]+$").IsMatch
 
         if check number then
             Map.add number name book
         else
-            printfn "Number has wrong format!"
+            failwith "Number has wrong format!"
             book
 
+    /// Gets all the numbers belonging to a name.
     member _.FindNumbers book name =
         let numbers = Map.filter (fun _ value -> value = name) book
                         |> Map.toList
-                        |> List.map (fun x -> fst x)
+                        |> List.map fst
 
         if not numbers.IsEmpty then
             Some numbers
         else
             None
 
+    /// Finds a name of a person to whom a number belongs.
     member _.FindName (book:Map<string, string>) number =
         if (Map.exists (fun key _ -> key = number) book) then
             Some book.[number]
         else
             None
 
+    /// Saves all the contacts into a file.
     member _.SaveToFile book =
         use fileStream = new FileStream("PhoneBook.txt", FileMode.Create)
         let formatter = BinaryFormatter()
         formatter.Serialize(fileStream, box book)
 
+    /// Reads and storesall the contacts from a file.
     member _.OpenFromFile book name =
         let merge (firstMap:Map<string, string>) (secondMap:Map<string, string>) =
             let rec split first second =
@@ -77,7 +82,7 @@ let main _ =
         match command with
         | "1" ->
             printfn "Application closed"
-            Environment.Exit(0)
+            ()
 
         | "2" ->
             printfn "Enter name: "
@@ -102,7 +107,7 @@ let main _ =
                printfn "Name not found!"
             else
                printfn "Results: "
-               List.iter (fun i -> printfn "%A" i ) found.Value
+               List.iter (printfn "%A") found.Value
 
             mainLoop contacts
 
@@ -131,16 +136,16 @@ let main _ =
 
         | "6" ->
             book.SaveToFile(contacts)
-            printfn("Saved!")
+            printfn "Saved!"
 
             mainLoop contacts
 
         | "7" ->
             printfn "Enter file name: "
             let name = Console.ReadLine()
-            printfn("Opened!")
+            printfn "Opened!"
 
-            mainLoop <|book.OpenFromFile contacts name
+            mainLoop <| book.OpenFromFile contacts name
 
         | _ ->
             printfn "Command not found!"
