@@ -1,8 +1,10 @@
 ﻿namespace BracketsMatching.Checker
 
+/// Contains bracket matching function
 module Checker =
 
-    let check (str:string) =
+    /// Checks whether the string contains appropriate bracket placement or not
+    let check (str: string) =
         let chars = Seq.toList str
 
         let rec checkLoop (charSequence:List<char>) (count:List<char>) =
