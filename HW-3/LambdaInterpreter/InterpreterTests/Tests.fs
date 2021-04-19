@@ -20,12 +20,6 @@ module Tests =
         |> should equal <| Abstraction('y', Abstraction('x', Variable 'x'))
 
     [<Test>]
-    let ``Simple case reducing`` () =
-        Interpreter.reduce
-        <| Application(Abstraction('x', Variable 'x'), Abstraction('x', Variable 'x'))
-        |> should equal (Abstraction('x', Variable 'x'))
-
-    [<Test>]
     let ``Substitution test`` () =
         Interpreter.subst
             'x' (Variable 'z') (Application(Variable 'x', Variable 'y'))

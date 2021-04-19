@@ -7,8 +7,12 @@ type Term =
     | Abstraction of char * Term
     | Application of Term * Term
 
+/// Lambda interpreter
 module Interpreter =
 
+    let random = Random()
+
+    /// Substitution
     let rec subst v leftTerm rightTerm =
         match rightTerm with
         | Variable rightVar when rightVar = v -> leftTerm
@@ -24,11 +28,17 @@ module Interpreter =
                         (loop acc applLeftTerm) + (loop acc applRightTerm)
                 loop Set.empty term
 
-            let getUniqueVariable set =
-                let random = Random()
+            let getUniqueVariable (set: Set<char>) =
                 let chars = Array.concat([[|'a' .. 'z'|];[|'A' .. 'Z'|];[|'0' .. '9'|]])
                 let size = Array.length chars in
-                chars.[random.Next size]
+
+                let rec loop char =
+                    if set.Contains char then
+                        loop chars.[random.Next size]
+                    else
+                        char
+
+                loop chars.[random.Next size]
 
             match leftTerm with
             | Variable x when x = v -> rightTerm
@@ -47,6 +57,7 @@ module Interpreter =
                 subst v leftTerm applLeftTerm,
                 subst v leftTerm applRightTerm)
 
+    /// Reduction of term
     let rec reduce term =
         match term with
         | Variable _ -> term
