@@ -5,14 +5,16 @@ module Checker =
     let check (str:string) =
         let chars = Seq.toList str
 
-        let rec checkLoop (charSequence:List<char>) (count:List<char>) (op:char) (cl:char) =
+        let rec checkLoop (charSequence:List<char>) (count:List<char>) =
             match (charSequence, count) with
-            | c :: tail,  count when c = op -> checkLoop tail (op :: count) op cl
-            | c1 :: tail, c2 :: count when c1 = cl && c2 = op -> checkLoop tail count op cl
-            | c :: _, _ when c = cl -> false
-            | _ :: tail, count -> checkLoop tail count op cl
+            | c :: tail, count when c = '(' || c = '[' || c = '{' -> checkLoop tail (c :: count)
+            | c1 :: tail, c2 :: count when (c1 = ')' && c2 = '(') ||
+                                           (c1 = ']' && c2 = '[') ||
+                                           (c1 = '}' && c2 = '{') -> checkLoop tail count
+            | c :: _, _ when c = ')' || c = ']' || c = '}' -> false
+            | _ :: tail, count -> checkLoop tail count
             | [], [] -> true
             | [], _ -> false
 
-        (* Calcualates in 3*n but otherwise match is too big and repetitive :( *)
-        checkLoop chars [] '(' ')' && checkLoop chars [] '[' ']' && checkLoop chars [] '{' '}'
+
+        checkLoop chars []
