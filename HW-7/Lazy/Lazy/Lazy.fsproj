@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="ILazy.fs" />
+    <Compile Include="LockFreeLazy.fs" />
+    <Compile Include="MultithreadedLazy.fs" />
+    <Compile Include="SingleThreadedLazy.fs" />
+    <Compile Include="Library.fs" />
+  </ItemGroup>
+
+</Project>
