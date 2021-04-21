@@ -30,6 +30,7 @@ type Tests () =
 
     static let checkMultiThreadedComputationCount (obj: ILazy<'t>) =
         computeCount <- 0
+        obj.Get() |> ignore
         Parallel.For(0, 16, (fun _ -> obj.Get() |> ignore)) |> ignore
         computeCount |> should equal 1
 

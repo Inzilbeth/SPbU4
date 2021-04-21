@@ -4,6 +4,7 @@ open System
 
 /// Thread-safe implementation of ILazy
 type MultiThreadedLazy<'t> (supplier : unit -> 't) =
+    [<VolatileField>]
     let mutable result = None
     let obj = new Object()
 
