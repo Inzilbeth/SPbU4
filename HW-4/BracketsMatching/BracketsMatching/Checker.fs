@@ -7,7 +7,7 @@ module Checker =
     let check (str: string) =
         let chars = Seq.toList str
 
-        let rec checkLoop (charSequence:List<char>) (count:List<char>) =
+        let rec checkLoop (charSequence: List<char>) (count: List<char>) =
             match (charSequence, count) with
             | c :: tail, count when c = '(' || c = '[' || c = '{' -> checkLoop tail (c :: count)
             | c1 :: tail, c2 :: count when (c1 = ')' && c2 = '(') ||
